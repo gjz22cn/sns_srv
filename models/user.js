@@ -9,7 +9,8 @@ var UserSchema = new Schema({
   name: { type: String},
   loginname: { type: String},
   pass: { type: String },
-  email: { type: String},
+  //email: { type: String},
+  phoneNumber: {type: String},
   url: { type: String },
   profile_image_url: {type: String},
   location: { type: String },
@@ -47,7 +48,7 @@ var UserSchema = new Schema({
 
 UserSchema.plugin(BaseModel);
 UserSchema.virtual('avatar_url').get(function () {
-  var url = this.avatar || ('https://gravatar.com/avatar/' + utility.md5(this.email.toLowerCase()) + '?size=48');
+  var url = this.avatar || ('https://gravatar.com/avatar/' + utility.md5(this.phoneNumber) + '?size=48');
 
   // www.gravatar.com 被墙
   url = url.replace('www.gravatar.com', 'gravatar.com');
@@ -71,7 +72,7 @@ UserSchema.virtual('isAdvanced').get(function () {
 });
 
 UserSchema.index({loginname: 1}, {unique: true});
-UserSchema.index({email: 1}, {unique: true});
+UserSchema.index({phoneNumber: 1}, {unique: true});
 UserSchema.index({score: -1});
 UserSchema.index({githubId: 1});
 UserSchema.index({accessToken: 1});

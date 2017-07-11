@@ -15,7 +15,8 @@ exports.showSignup = function (req, res) {
 
 exports.signup = function (req, res, next) {
   var loginname = validator.trim(req.body.loginname).toLowerCase();
-  var email     = validator.trim(req.body.email).toLowerCase();
+  //var email     = validator.trim(req.body.email).toLowerCase();
+  var phoneNumber = req.body.phoneNumber;
   var pass      = validator.trim(req.body.pass);
   var rePass    = validator.trim(req.body.re_pass);
 
@@ -23,11 +24,11 @@ exports.signup = function (req, res, next) {
   ep.fail(next);
   ep.on('prop_err', function (msg) {
     res.status(422);
-    res.render('sign/signup', {error: msg, loginname: loginname, email: email});
+    res.render('sign/signup', {error: msg, loginname: loginname, phoneNumber: phoneNumber});
   });
 
   // 验证信息的正确性
-  if ([loginname, pass, rePass, email].some(function (item) { return item === ''; })) {
+  if ([loginname, pass, rePass, phoneNumber].some(function (item) { return item === ''; })) {
     ep.emit('prop_err', '信息不完整。');
     return;
   }
@@ -38,8 +39,12 @@ exports.signup = function (req, res, next) {
   if (!tools.validateId(loginname)) {
     return ep.emit('prop_err', '用户名不合法。');
   }
+  /*
   if (!validator.isEmail(email)) {
     return ep.emit('prop_err', '邮箱不合法。');
+  }*/
+  if (!validator.isNumeric(phoneNumber) || !validator.isLength(phoneNumber, {min:11, max:11})) {
+      return ep.emit('prop_err', '手机号码不合法 ');
   }
   if (pass !== rePass) {
     return ep.emit('prop_err', '两次密码输入不一致。');
@@ -49,28 +54,29 @@ exports.signup = function (req, res, next) {
 
   User.getUsersByQuery({'$or': [
     {'loginname': loginname},
-    {'email': email}
+    {'phoneNumber': phoneNumber}
   ]}, {}, function (err, users) {
     if (err) {
       return next(err);
     }
     if (users.length > 0) {
-      ep.emit('prop_err', '用户名或邮箱已被使用。');
+      ep.emit('prop_err', '用户名或手机号码已被使用。');
       return;
     }
 
     tools.bhash(pass, ep.done(function (passhash) {
       // create gravatar
-      var avatarUrl = User.makeGravatar(email);
-      User.newAndSave(loginname, loginname, passhash, email, avatarUrl, false, function (err) {
+      var avatarUrl = User.makeGravatar(phoneNumber);
+      User.newAndSave(loginname, loginname, passhash, phoneNumber, avatarUrl, true, function (err) {
         if (err) {
           return next(err);
         }
         // 发送激活邮件
-        mail.sendActiveMail(email, utility.md5(email + passhash + config.session_secret), loginname);
+        /*mail.sendActiveMail(email, utility.md5(email + passhash + config.session_secret), loginname);
         res.render('sign/signup', {
           success: '欢迎加入 ' + config.name + '！我们已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号。'
-        });
+        });*/
+        res.render('notify/notify', {success: '帐号已被激活，请登录'});
       });
 
     }));
