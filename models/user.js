@@ -44,7 +44,7 @@ var UserSchema = new Schema({
 
   retrieve_time: {type: Number},
   retrieve_key: {type: String},
-
+  friendsList: {type:Array},
   accessToken: {type: String},
 });
 
