@@ -1,0 +1,182 @@
+[2017-07-17 18:49:21.790] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 18:49:21.794] [INFO] cheese - God bless love....
+[2017-07-17 18:49:21.794] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 18:49:21.796] [INFO] cheese - 
+[2017-07-17 18:49:21.796] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 19:54:44.652] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 19:54:44.655] [INFO] cheese - God bless love....
+[2017-07-17 19:54:44.656] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 19:54:44.657] [INFO] cheese - 
+[2017-07-17 19:54:44.657] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 19:57:20.675] [INFO] cheese - 
+
+Started 2017-07-17T11:57:20.674Z POST /app ::ffff:192.168.2.179
+[2017-07-17 19:57:20.704] [INFO] cheese - Completed 404 [32m(30ms)[39m
+[2017-07-17 19:57:25.679] [INFO] cheese - 
+
+Started 2017-07-17T11:57:25.679Z POST /app ::ffff:192.168.2.179
+[2017-07-17 19:57:25.683] [INFO] cheese - Completed 404 [32m(4ms)[39m
+[2017-07-17 19:59:49.427] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 19:59:49.436] [INFO] cheese - God bless love....
+[2017-07-17 19:59:49.438] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 19:59:49.440] [INFO] cheese - 
+[2017-07-17 19:59:49.445] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:01:23.849] [INFO] cheese - 
+
+Started 2017-07-17T12:01:23.848Z POST /app ::ffff:192.168.2.179
+[2017-07-17 20:01:23.901] [INFO] cheese - Completed 404 [32m(52ms)[39m
+[2017-07-17 20:22:36.037] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:22:36.041] [INFO] cheese - God bless love....
+[2017-07-17 20:22:36.042] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:22:36.043] [INFO] cheese - 
+[2017-07-17 20:22:36.044] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:23:49.974] [INFO] cheese - 
+
+Started 2017-07-17T12:23:49.973Z GET / ::ffff:127.0.0.1
+[2017-07-17 20:23:50.046] [DEBUG] cheese - [35mMONGO[39m users.[34mfindOne[39m {"conditions":{"_id":"59658846aa59aa6810a1d50f"},"options":{},"collectionName":"users"} [32m22ms[39m
+[2017-07-17 20:23:50.106] [DEBUG] cheese - [35mMONGO[39m topics.[34mfind[39m {"conditions":{"deleted":false,"tab":{"$nin":["job","dev"]},"reply_count":0},"options":{"limit":5,"sort":{"create_at":-1},"fields":{}},"collectionName":"topics"} [32m9ms[39m
+[2017-07-17 20:23:50.108] [DEBUG] cheese - Cache set no_reply_topics [32m1ms[39m
+[2017-07-17 20:23:50.113] [DEBUG] cheese - [35mMONGO[39m users.[34mfind[39m {"conditions":{"is_block":false},"options":{"limit":10,"sort":{"score":-1}},"collectionName":"users"} [32m43ms[39m
+[2017-07-17 20:23:50.114] [DEBUG] cheese - Cache set tops [32m0ms[39m
+[2017-07-17 20:23:50.116] [DEBUG] cheese - [35mMONGO[39m topics.[34mfind[39m {"conditions":{"deleted":false,"tab":{"$nin":["job","dev"]}},"options":{"skip":0,"limit":20,"sort":{"top":-1,"last_reply_at":-1},"fields":{}},"collectionName":"topics"} [32m55ms[39m
+[2017-07-17 20:23:50.141] [DEBUG] cheese - Cache set {"tab":{"$nin":["job","dev"]},"deleted":false}pages [32m0ms[39m
+[2017-07-17 20:23:50.237] [INFO] cheese - Render view index [32m(96ms)[39m
+[2017-07-17 20:23:50.257] [INFO] cheese - Completed 200 [32m(281ms)[39m
+[2017-07-17 20:24:13.164] [INFO] cheese - 
+
+Started 2017-07-17T12:24:13.164Z GET /signup ::ffff:127.0.0.1
+[2017-07-17 20:24:13.173] [DEBUG] cheese - [35mMONGO[39m users.[34mfindOne[39m {"conditions":{"_id":"59658846aa59aa6810a1d50f"},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-17 20:24:13.256] [INFO] cheese - Render view sign/signup [32m(82ms)[39m
+[2017-07-17 20:24:13.260] [INFO] cheese - Completed 200 [32m(96ms)[39m
+[2017-07-17 20:24:36.513] [INFO] cheese - 
+
+Started 2017-07-17T12:24:36.513Z POST /signup ::ffff:127.0.0.1
+[2017-07-17 20:24:36.580] [DEBUG] cheese - [35mMONGO[39m users.[34mfindOne[39m {"conditions":{"_id":"59658846aa59aa6810a1d50f"},"options":{},"collectionName":"users"} [32m7ms[39m
+[2017-07-17 20:24:36.628] [DEBUG] cheese - [35mMONGO[39m users.[34mfind[39m {"conditions":{"$or":[{"loginname":"zilianglei"},{"phoneNumber":"17212346543"}]},"options":{},"collectionName":"users"} [32m29ms[39m
+[2017-07-17 20:24:37.703] [INFO] cheese - Completed 200 [32m(1190ms)[39m
+[2017-07-17 20:24:38.096] [INFO] cheese - 
+
+Started 2017-07-17T12:24:38.096Z GET /favicon.ico ::ffff:127.0.0.1
+[2017-07-17 20:24:38.099] [DEBUG] cheese - [35mMONGO[39m users.[34mfindOne[39m {"conditions":{"_id":"59658846aa59aa6810a1d50f"},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-17 20:24:38.102] [INFO] cheese - Completed 404 [32m(6ms)[39m
+[2017-07-17 20:26:03.061] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:26:03.065] [INFO] cheese - God bless love....
+[2017-07-17 20:26:03.066] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:26:03.067] [INFO] cheese - 
+[2017-07-17 20:26:03.068] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:35:28.165] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:35:28.178] [INFO] cheese - God bless love....
+[2017-07-17 20:35:28.184] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:35:28.185] [INFO] cheese - 
+[2017-07-17 20:35:28.185] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:36:29.138] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:36:29.142] [INFO] cheese - God bless love....
+[2017-07-17 20:36:29.144] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:36:29.145] [INFO] cheese - 
+[2017-07-17 20:36:29.146] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:36:56.085] [INFO] cheese - 
+
+Started 2017-07-17T12:36:56.084Z POST /signup ::ffff:127.0.0.1
+[2017-07-17 20:36:56.191] [DEBUG] cheese - [35mMONGO[39m users.[34mfindOne[39m {"conditions":{"_id":"59658846aa59aa6810a1d50f"},"options":{},"collectionName":"users"} [32m14ms[39m
+[2017-07-17 20:36:56.221] [DEBUG] cheese - [35mMONGO[39m users.[34mfind[39m {"conditions":{"$or":[{"loginname":"zilianglei"},{"phoneNumber":"17212346543"}]},"options":{},"collectionName":"users"} [32m7ms[39m
+[2017-07-17 20:36:57.028] [INFO] cheese - Completed 200 [32m(944ms)[39m
+[2017-07-17 20:37:12.975] [INFO] cheese - 
+
+Started 2017-07-17T12:37:12.974Z POST /app ::ffff:192.168.2.179
+[2017-07-17 20:37:12.980] [INFO] cheese - Completed 404 [32m(6ms)[39m
+[2017-07-17 20:37:14.863] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-17 20:38:46.201] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:38:46.204] [INFO] cheese - God bless love....
+[2017-07-17 20:38:46.205] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:38:46.206] [INFO] cheese - 
+[2017-07-17 20:38:46.206] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:38:49.127] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m3ms[39m
+[2017-07-17 20:40:57.628] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:40:57.633] [INFO] cheese - God bless love....
+[2017-07-17 20:40:57.635] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:40:57.638] [INFO] cheese - 
+[2017-07-17 20:40:57.639] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:42:18.248] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m22ms[39m
+[2017-07-17 20:43:13.830] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:43:13.835] [INFO] cheese - God bless love....
+[2017-07-17 20:43:13.835] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:43:13.836] [INFO] cheese - 
+[2017-07-17 20:43:13.837] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:43:16.901] [INFO] cheese - 
+
+Started 2017-07-17T12:43:16.900Z POST /app ::ffff:192.168.2.179
+[2017-07-17 20:43:16.974] [INFO] cheese - Completed 404 [32m(74ms)[39m
+[2017-07-17 20:43:18.659] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m10ms[39m
+[2017-07-17 20:48:39.636] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-17 20:48:45.171] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-17 20:48:47.698] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-17 20:56:22.486] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:56:22.489] [INFO] cheese - God bless love....
+[2017-07-17 20:56:22.490] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:56:22.491] [INFO] cheese - 
+[2017-07-17 20:56:22.492] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:56:25.910] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m3ms[39m
+[2017-07-17 20:57:21.264] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:57:21.268] [INFO] cheese - God bless love....
+[2017-07-17 20:57:21.271] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:57:21.272] [INFO] cheese - 
+[2017-07-17 20:57:21.272] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:57:29.021] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m3ms[39m
+[2017-07-17 20:57:32.592] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-17 20:57:35.301] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-17 20:57:40.115] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-17 20:58:08.463] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-17 20:59:03.295] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-17 20:59:03.299] [INFO] cheese - God bless love....
+[2017-07-17 20:59:03.299] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-17 20:59:03.301] [INFO] cheese - 
+[2017-07-17 20:59:03.301] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-17 20:59:05.987] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m13ms[39m
+[2017-07-17 20:59:09.518] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-17 20:59:11.576] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m0ms[39m
+[2017-07-17 20:59:15.518] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-17 21:00:15.004] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-17 21:00:17.459] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m0ms[39m
+[2017-07-17 21:00:19.997] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:21:51.500] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-18 10:21:51.503] [INFO] cheese - God bless love....
+[2017-07-18 10:21:51.503] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-18 10:21:51.504] [INFO] cheese - 
+[2017-07-18 10:21:51.505] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-18 10:22:39.868] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m74ms[39m
+[2017-07-18 10:23:47.627] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"4"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:25:07.633] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"4"},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:25:20.208] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"4"},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:25:20.945] [INFO] cheese - 
+
+Started 2017-07-18T02:25:20.944Z POST /app ::ffff:192.168.2.179
+[2017-07-18 10:25:21.037] [INFO] cheese - Completed 404 [32m(85ms)[39m
+[2017-07-18 10:26:30.660] [INFO] cheese - 
+
+Started 2017-07-18T02:26:30.660Z POST /app ::ffff:192.168.2.179
+[2017-07-18 10:26:30.664] [INFO] cheese - Completed 404 [32m(4ms)[39m
+[2017-07-18 10:26:33.227] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:26:38.799] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"4"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m0ms[39m
+[2017-07-18 10:26:54.427] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:26:57.213] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":null},"doc":{"$set":{"online":0}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-18 10:27:59.138] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-18 10:27:59.141] [INFO] cheese - God bless love....
+[2017-07-18 10:27:59.142] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-18 10:27:59.143] [INFO] cheese - 
+[2017-07-18 10:27:59.143] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-18 10:28:04.870] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-18 10:28:10.098] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"4"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:29:29.555] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-18 10:29:29.558] [INFO] cheese - God bless love....
+[2017-07-18 10:29:29.558] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-18 10:29:29.559] [INFO] cheese - 
+[2017-07-18 10:29:29.559] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-18 10:29:37.252] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m2ms[39m
+[2017-07-18 10:29:42.343] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"4"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m
+[2017-07-18 10:30:14.650] [INFO] cheese - NodeClub listening on port 3000
+[2017-07-18 10:30:14.652] [INFO] cheese - God bless love....
+[2017-07-18 10:30:14.653] [INFO] cheese - You can debug your app with http://localhost:3000
+[2017-07-18 10:30:14.654] [INFO] cheese - 
+[2017-07-18 10:30:14.654] [INFO] cheese - nodejs-websocket listening on port 3009
+[2017-07-18 10:30:17.670] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"zilianglei"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m3ms[39m
+[2017-07-18 10:30:21.011] [DEBUG] cheese - [35mMONGO[39m users.[34mupdate[39m {"conditions":{"loginname":"4"},"doc":{"$set":{"online":1}},"options":{},"collectionName":"users"} [32m1ms[39m

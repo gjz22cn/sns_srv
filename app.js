@@ -179,4 +179,73 @@ if (!module.parent) {
   });
 }
 
+
+
+
+var models  = require('./models');
+var User    = models.User;
+
+var userId;
+var wsSrv = require('ws-server');
+var ws=require("nodejs-websocket");
+var wsServer = ws.createServer(function(conn) {
+    conn.on("text", function(msg) {
+
+      var message = JSON.parse(msg);
+       userId = message.userId;
+       var msgType = message.msgType
+      // console.log(userId);
+    if(msgType == "login"){
+
+            User.update({loginname:userId},{online:1},function(error){
+
+
+          console.log("pass ");
+
+
+        });
+
+          }
+        wsSrv.message_handle(msg, conn);
+
+   
+
+
+    });
+
+    conn.on("close", function(code, reason) {
+
+       User.update({loginname:userId},{online:0},function(error){
+
+
+ console.log("close ");
+
+        });
+
+
+        console.log("ws conn close: code="+code+", reason="+reason);
+        });
+
+    conn.on("error", function(code, reason) {
+
+   /*     User.update({loginname:userId},{online:0},function(error){
+
+           console.log("error");
+
+
+
+
+        });*/
+
+
+      
+        console.log("ws conn error: code="+code+", reason="+reason);
+
+    });
+}).listen(3009,function(){
+
+logger.info('nodejs-websocket listening on port', 3009);
+
+});
+
 module.exports = app;

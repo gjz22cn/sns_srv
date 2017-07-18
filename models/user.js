@@ -10,6 +10,8 @@ var UserSchema = new Schema({
   loginname: { type: String},
   pass: { type: String },
   //email: { type: String},
+
+  online:{type:Number,default: 0 },
   phoneNumber: {type: String},
   url: { type: String },
   profile_image_url: {type: String},
