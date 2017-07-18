@@ -24,7 +24,8 @@ exports.signup = function (req, res, next) {
   ep.fail(next);
   ep.on('prop_err', function (msg) {
     res.status(422);
-    res.render('sign/signup', {error: msg, loginname: loginname, phoneNumber: phoneNumber});
+    //res.render('sign/signup', {error: msg, loginname: loginname, phoneNumber: phoneNumber});
+    res.send(JSON.stringify({ret: 1, error: msg}));
   });
 
   // 验证信息的正确性
@@ -76,7 +77,8 @@ exports.signup = function (req, res, next) {
         res.render('sign/signup', {
           success: '欢迎加入 ' + config.name + '！我们已给您的注册邮箱发送了一封邮件，请点击里面的链接来激活您的帐号。'
         });*/
-        res.render('notify/notify', {success: '帐号已被激活，请登录'});
+        //res.render('notify/notify', {success: '帐号已被激活，请登录'});
+        res.send(JSON.stringify({ret: 0}));
       });
 
     }));
@@ -121,7 +123,8 @@ exports.login = function (req, res, next) {
 
   if (!loginname || !pass) {
     res.status(422);
-    return res.render('sign/signin', { error: '信息不完整。' });
+    //return res.render('sign/signin', { error: '信息不完整。' });
+    return res.send(JSON.stringify({ret: 1, error: '信息不完整。'}));
   }
 
   var getUser;
@@ -133,8 +136,9 @@ exports.login = function (req, res, next) {
 
   ep.on('login_error', function (login_error) {
     res.status(403);
-    res.render('sign/signin', { error: '用户名或密码错误' });
-  });
+    //res.render('sign/signin', { error: '用户名或密码错误' });
+    res.send(JSON.stringify({ret: 1, error: '用户名或密码错误'}));
+  })
 
   getUser(loginname, function (err, user) {
     if (err) {
@@ -164,7 +168,8 @@ exports.login = function (req, res, next) {
           break;
         }
       }
-      res.redirect(refer);
+      //res.redirect(refer);
+      res.send(JSON.stringify({ret: 0}));
     }));
   });
 };
@@ -173,7 +178,8 @@ exports.login = function (req, res, next) {
 exports.signout = function (req, res, next) {
   req.session.destroy();
   res.clearCookie(config.auth_cookie_name, { path: '/' });
-  res.redirect('/');
+  //res.redirect('/');
+  res.send(JSON.stringify({ret: 0}));
 };
 
 exports.activeAccount = function (req, res, next) {

@@ -24,7 +24,7 @@ var search = require('./controllers/search');
 var passport = require('passport');
 var configMiddleware = require('./middlewares/conf');
 var config = require('./config');
-
+var friend = require("./controllers/friend");
 var router = express.Router();
 
 // home page
@@ -118,6 +118,15 @@ router.get('/auth/github/new', github.new);
 router.post('/auth/github/create', limit.peripperday('create_user_per_ip', config.create_user_per_ip, {showJson: false}), github.create);
 
 router.get('/search', search.index);
+
+// add friends
+router.get('/user/:name/listFriends',friend.listFriends);  //根据用户名查询新的好友列表、新的好友邀请数
+router.post('/search_user',friend.search_user);  //根据用户名查询用户是否存在
+router.post('/friends/add',friend.addInvitationMessage);  //添加好友（信息）
+router.get('/friends/newInvitations',friend.newInvitations);  //获取新的好友邀请（信息）
+router.post('/friends/action',friend.action);  //接受或拒绝好友邀请
+router.post('/friends/delete',friend.deleteFriend);  //删除好友
+
 
 if (!config.debug) { // 这个兼容破坏了不少测试
 	router.get('/:name', function (req, res) {

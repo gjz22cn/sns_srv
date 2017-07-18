@@ -2,6 +2,7 @@ var models  = require('../models');
 var User    = models.User;
 var utility = require('utility');
 var uuid    = require('node-uuid');
+var InviteMessage    = models.InvitationMessage;
 
 /**
  * 根据用户名列表查找用户列表
@@ -116,4 +117,24 @@ exports.makeGravatar = makeGravatar;
 
 exports.getGravatar = function (user) {
   return user.avatar || makeGravatar(user);
+};
+
+/**
+ * 向loginname添加好友newFriendName
+ * @param {String} loginName 登录名
+ * @param {String} newFriendName 新好友用户名
+ * @param {Function} callback 回调函数
+ */
+exports.addFriend = function (loginname, newFriendName, callback) {
+  User.update({'loginname':loginname}, {'$addToSet':{'friendsList':newFriendName}}, callback);
+}
+
+/**
+ * 从loginname好友列表中删除friendName
+ * @param {String} loginName 登录名
+ * @param {String} friendName 好友用户名
+ * @param {Function} callback 回调函数
+ */
+exports.deleteFriend = function (loginname, friendName, callback) {
+  User.update({'loginname':loginname}, {'$pull':{'friendsList':friendName}}, callback);
 };
