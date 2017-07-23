@@ -44,7 +44,14 @@ if (config.allow_sign_up) {
     return res.redirect('/auth/github')
   });
 }
+
+router.get('/test', topic.showTest);  // 进入发朋友圈页面
+router.post('/test', topic.put);  // 发圈校验
+//router.post('/signin', sign.login);  // 发圈校验
+
+
 router.post('/signout', sign.signout);  // 登出
+
 router.get('/signin', sign.showLogin);  // 进入登录页面
 router.post('/signin', sign.login);  // 登录校验
 router.get('/active_account', sign.activeAccount);  //帐号激活
@@ -62,6 +69,13 @@ router.get('/stars', user.listStars); // 显示所有达人列表页
 router.get('/users/top100', user.top100);  // 显示积分前一百用户页
 router.get('/user/:name/collections', user.listCollectedTopics);  // 用户收藏的所有话题页
 router.get('/user/:name/topics', user.listTopics);  // 用户发布的所有话题页
+
+//获取用户发的朋友圈
+router.get('/user/:name/moments', user.presentTopics);  // 用户发布的所有话题页
+
+//转发朋友圈
+router.post('/topic/:tid/transmit', user.transmitTopics);  
+
 router.get('/user/:name/replies', user.listReplies);  // 用户参与的所有回复页
 router.post('/user/set_star', auth.adminRequired, user.toggleStar); // 把某用户设为达人
 router.post('/user/cancel_star', auth.adminRequired, user.toggleStar);  // 取消某用户的达人身份
@@ -82,10 +96,16 @@ router.post('/topic/:tid/good', auth.adminRequired, topic.good); // 将某话题
 router.get('/topic/:tid/edit', auth.userRequired, topic.showEdit);  // 编辑某话题
 router.post('/topic/:tid/lock', auth.adminRequired, topic.lock); // 锁定主题，不能再回复
 
-router.post('/topic/:tid/delete', auth.userRequired, topic.delete);
+//router.post('/topic/:tid/delete', auth.userRequired, topic.delete);
+//简单实现delete功能
+router.post('/topic/:tid/delete', /*auth.userRequired,*/ topic.remove);
 
 // 保存新建的文章
-router.post('/topic/create', auth.userRequired, limit.peruserperday('create_topic', config.create_post_per_day, {showJson: false}), topic.put);
+//router.post('/topic/create', auth.userRequired, limit.peruserperday('create_topic', config.create_post_per_day, {showJson: false}), topic.put);
+
+router.post('/topic/create', auth.userRequired, topic.put);
+//此处需要拿到用户id
+//router.post('/topic/create', auth.userRequired,topic.put);
 
 router.post('/topic/:tid/edit', auth.userRequired, topic.update);
 router.post('/topic/collect', auth.userRequired, topic.collect); // 关注某话题

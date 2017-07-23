@@ -84,6 +84,23 @@ exports.getUsersByQuery = function (query, opt, callback) {
 };
 
 /**
+ * 根据登录名，修改用户获取朋友圈的时间
+ * @param {String} loginname 登录名
+ * @param {Function} callback 回调函数
+ */
+exports.updateRetrieveAt = function(loginname,callback){
+	User.update({loginname: loginname},{"$set":{"retrieve_at":Date.now()}}).exec(callback);
+};
+/**
+ * 根据登录名，获取用户的id
+ * @param {String} loginname 登录名
+ * @param {Function} callback 回调函数
+ */
+exports.getIdByName = function(name,callback){
+	User.find({"name":name},{_id:1},callback);
+};
+
+/**
  * 根据查询条件，获取一个用户
  * Callback:
  * - err, 数据库异常

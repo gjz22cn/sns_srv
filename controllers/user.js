@@ -2,6 +2,7 @@ var User         = require('../proxy').User;
 var Topic        = require('../proxy').Topic;
 var Reply        = require('../proxy').Reply;
 var TopicCollect = require('../proxy').TopicCollect;
+var Transmit     = require('../proxy').Transmit;
 var utility      = require('utility');
 var util         = require('util');
 var TopicModel   = require('../models').Topic;
@@ -11,6 +12,8 @@ var config       = require('../config');
 var EventProxy   = require('eventproxy');
 var validator    = require('validator');
 var _            = require('lodash');
+var logger = require('../common/logger')
+var mongoose = require('mongoose');
 
 exports.index = function (req, res, next) {
   var user_name = req.params.name;
@@ -243,40 +246,6 @@ exports.top100 = function (req, res, next) {
   });
 };
 
-exports.listTopics = function (req, res, next) {
-  var user_name = req.params.name;
-  var page = Number(req.query.page) || 1;
-  var limit = config.list_topic_count;
-
-  User.getUserByLoginName(user_name, function (err, user) {
-    if (!user) {
-      res.render404('这个用户不存在。');
-      return;
-    }
-
-    var render = function (topics, pages) {
-      res.render('user/topics', {
-        user: user,
-        topics: topics,
-        current_page: page,
-        pages: pages
-      });
-    };
-
-    var proxy = new EventProxy();
-    proxy.assign('topics', 'pages', render);
-    proxy.fail(next);
-
-    var query = {'author_id': user._id};
-    var opt = {skip: (page - 1) * limit, limit: limit, sort: '-create_at'};
-    Topic.getTopicsByQuery(query, opt, proxy.done('topics'));
-
-    Topic.getCountByQuery(query, proxy.done(function (all_topics_count) {
-      var pages = Math.ceil(all_topics_count / limit);
-      proxy.emit('pages', pages);
-    }));
-  });
-};
 
 exports.listReplies = function (req, res, next) {
   var user_name = req.params.name;
@@ -376,4 +345,204 @@ exports.deleteAll = function (req, res, next) {
     // 点赞数也全部干掉
     ReplyModel.update({}, {$pull: {'ups': user._id}}, {multi: true}, ep.done('del_ups'));
   }));
+};
+exports.presentTopics= function(req,res,next){
+	var loginname = req.params.name;
+	var topicsArray = [];
+	var ep = new EventProxy();
+	ep.all('self_moments','friends_moments',function(selfMoments,friendsMoments){
+		
+		if(selfMoments.length > 0){
+			topicsContainer(selfMoments);
+		}
+		friendsMoments.forEach(function (topics,i) {
+			if(topics.length > 0){
+				topicsContainer(topics);
+			}
+		});
+		logger.info("-----------the length of total moments:"+topicsArray.length); 
+		
+		if(topicsArray.length>0){
+			logger.info("-----------get all moments finished"); 
+			res.send(topicsArray);
+			return;
+		}
+		logger.info("-----------No latest moments"); 
+		res.send({"ret":0});
+	});
+	
+	ep.fail(next);
+	
+	var topicsContainer = function (topics) {
+		if(topics.length > 0){
+			topicsArray = topicsArray.concat(topics);
+		}
+		return;
+	};
+	
+	User.getUserByLoginName(loginname,function (err,user) {
+		if(err){
+			logger.info("-----------processing problem of get user by login name"); 
+			res.send({"ret":1});
+		}
+		if (!user) {
+			res.render404('这个用户不存在。');
+			return;
+		}
+		
+		//----------get self moments
+		var querySelfMoments = {'author_id': user._id,'create_at': {$gte:user.retrieve_at}};
+		Topic.getTopicsByUserID(querySelfMoments,{},function(err,topics){
+			if(err){
+				logger.info("----------- processing problem of query self moments");
+				res.send({"ret":1});
+			}
+			logger.info("----------- get self moments finished");
+			ep.emit('self_moments',topics);
+		});
+		//----------get transmit moments
+		var friendsList = user.friendsList;
+		var tempArray = [];
+		var proxy = new EventProxy();
+		proxy.after('forFriendsList',friendsList.length,function(result){
+			ep.emit('friends_moments',result);
+		});
+		friendsList.forEach(function (name, i) {
+			User.getIdByName(name,function(err,friendId){
+				var temp = friendId[0]._id;
+				var friendId = mongoose.Types.ObjectId(temp);
+				if(err){
+					logger.info("----------- processing problem when retrieve friend id");
+					res.send({"ret":1});
+				}
+				var proxyFriendSelf = new EventProxy();
+				var friendSelfMoments = [];
+				proxyFriendSelf.all('friendSelf','friendTransmit',function(friendSelf,friendTransmit){
+					if(friendSelf.length>0){
+						friendSelfMoments = friendSelfMoments.concat(friendSelf);
+					}
+					if(friendTransmit.length>0){
+						friendSelfMoments = friendSelfMoments.concat(friendTransmit);
+					}
+					proxy.emit("forFriendsList",friendSelfMoments);
+				});
+				
+				
+				var queryFriendsMoments = {'author_id':friendId,'create_at': {$gte:user.retrieve_at}};
+				logger.info("----------- get moments from friend ");
+				//----------get friends moments
+				Topic.getTopicsByUserID(queryFriendsMoments,{},function(err,topics){
+					if(err){
+						logger.info("----------- processing problem of query friends moments");
+						res.send({"ret":1});
+					}
+					logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+topics);
+					proxyFriendSelf.emit('friendSelf',topics);
+				});
+				
+				var queryTransmitTopicsID = {'transmit_user_id': friendId,'transmit_at': {$gte:user.retrieve_at}};
+//				var queryTransmitTopicsID = {'transmit_user_id': friendId/*,'create_at': {$gte:user.retrieve_at}*/};
+				Transmit.getTopicsIDByUserID(queryTransmitTopicsID,{},function(err,transmitsItems){
+					logger.info("+++++++++++ friendId    "+friendId);
+					if(err){
+						logger.info("----------- processing problem of query transmit moments id");
+						res.send({"ret":1});
+					}
+					logger.info("+++++++++++ content of transmit array"+transmitsItems);
+					var transmitArray = [];
+					if(transmitsItems.length>0){
+						var transmitProxy = new EventProxy();
+						transmitProxy.after('forTopicIDs',transmitsItems.length,function(result){
+//							ep.emit('transmitMoments',result);
+							proxyFriendSelf.emit('friendTransmit',result);
+						});
+						transmitsItems.forEach(function (topicId, i) {
+							logger.info("+++++++++++ get moments from transmit");
+							var temp = topicId.topic_id;
+							logger.info("+++++++++++ temp  "+temp);
+							var topicId = mongoose.Types.ObjectId(temp);
+							var queryTransmitTopicByTopicId = {'_id':topicId};
+							Topic.getTransmitTopicByTopicID(queryTransmitTopicByTopicId,{},function(err,topic){
+								if(err){
+									logger.info("----------- processing problem of query transmit moments");
+									res.send({"ret":1});
+								}
+								logger.info("----------- content of topic"+topic);
+								transmitArray = transmitArray.concat(topic);
+								transmitProxy.emit("forTopicIDs",topic);
+//								proxy.emit("forFriendsList",topic);
+//								logger.info("+++++++++++ the arry has value"+transmitArray);
+							});
+						});
+						/*proxyFriendSelf.emit('friendTransmit',transmitArray);
+						logger.info("+++++++++++ the arry has value"+transmitArray);*/
+					}
+					else{
+						proxyFriendSelf.emit('friendTransmit',{abc:null});
+						logger.info("+++++++++++ the arry is null");
+					}
+					
+				});
+				
+				
+				
+			});
+		});
+		logger.info("----------- get moments from friend finished");
+	});
+	
+	User.updateRetrieveAt(loginname,{});
+};
+
+exports.listTopics = function (req, res, next) {
+	var user_name = req.params.name;
+	var page = Number(req.query.page) || 1;
+	var limit = config.list_topic_count;
+	
+	User.getUserByLoginName(user_name, function (err, user) {
+		if (!user) {
+			res.render404('这个用户不存在。');
+			return;
+		}
+		
+		var render = function (topics, pages) {
+			res.render('user/topics', {
+				user: user,
+				topics: topics,
+				current_page: page,
+				pages: pages
+			});
+		};
+		
+		var proxy = new EventProxy();
+		proxy.assign('topics', 'pages', render);
+		proxy.fail(next);
+		
+		var query = {'author_id': user._id};
+		var opt = {skip: (page - 1) * limit, limit: limit, sort: '-create_at'};
+		Topic.getTopicsByQuery(query, opt, proxy.done('topics'));
+		
+		Topic.getCountByQuery(query, proxy.done(function (all_topics_count) {
+			var pages = Math.ceil(all_topics_count / limit);
+			proxy.emit('pages', pages);
+		}));
+	});
+};
+
+exports.transmitTopics = function (req, res, next) {
+	var topic_id = req.params.tid;
+	var transmit_user_id = req.body.uid;
+	logger.info("********************  "+transmit_user_id);
+//	var transmit_user_id = req.session.user._id;
+	var transmit_at = Date.now();
+	Transmit.transmitAndSave(topic_id,transmit_user_id,transmit_at,function (err, transmit) {
+	    if (err) {
+	    	logger.info("Existing problem");
+	    	logger.info(err);
+	    	res.send({"ret":1});
+	    }
+	    else{
+	    	res.send({"ret":0});
+	    }
+	  });	
 };
