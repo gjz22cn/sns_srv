@@ -181,7 +181,7 @@ if (!module.parent) {
 
 
 
-
+/*
 var models  = require('./models');
 var User    = models.User;
 
@@ -235,7 +235,7 @@ var wsServer = ws.createServer(function(conn) {
 
 
 
-        });*/
+        });
 
 
       
@@ -247,5 +247,6 @@ var wsServer = ws.createServer(function(conn) {
 logger.info('nodejs-websocket listening on port', 3009);
 
 });
+*/
 
 module.exports = app;
