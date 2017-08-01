@@ -118,7 +118,7 @@ exports.create = function (req, res, next) {
 };
 
 
-exports.put = function (req, res, next) {
+/*exports.put = function (req, res, next) {
   var title   = validator.trim(req.body.title);
   var tab     = validator.trim(req.body.tab);
   var content = validator.trim(req.body.t_content);
@@ -150,7 +150,6 @@ exports.put = function (req, res, next) {
       tabs: config.tabs
     });
   }
-
   Topic.newAndSave(title, content, tab, req.session.user._id, function (err, topic) {
     if (err) {
       return next(err);
@@ -173,7 +172,29 @@ exports.put = function (req, res, next) {
     //发送at消息
     at.sendMessageToMentionUsers(content, topic._id, req.session.user._id);
   });
-};
+};*/
+exports.put = function (req, res, next) {
+	  var tab     = validator.trim(req.body.tab);
+	  var content = validator.trim(req.body.t_content);
+	  
+	  logger.info("----body----"+JSON.stringify(req.body));
+	  logger.info("----init success ----");
+	  
+	  Topic.createAndSave(content, tab, req.session.user._id, function (err, topic) {
+	    if (err) {
+	    	logger.info("Existing problem");
+	    	logger.info(err);
+	    	res.send({"ret":1});
+	    }
+	    else{
+	    	res.send({"ret":0});
+	    }
+	  });
+	};
+exports.showTest = function (req, res) {
+	  res.render('test');
+	};
+
 
 exports.showEdit = function (req, res, next) {
   var topic_id = req.params.tid;
@@ -259,7 +280,7 @@ exports.update = function (req, res, next) {
   });
 };
 
-exports.delete = function (req, res, next) {
+/*exports.delete = function (req, res, next) {
   //删除话题, 话题作者topic_count减1
   //删除回复，回复作者reply_count减1
   //删除topic_collect，用户collect_topic_count减1
@@ -290,6 +311,43 @@ exports.delete = function (req, res, next) {
       res.send({ success: true, message: '话题已被删除。' });
     });
   });
+};*/
+
+exports.remove = function (req, res, next) {
+	  var topic_id = req.params.tid;
+	  logger.info("The delete item is : "+topic_id);
+	  Topic.remove(topic_id,function(err){
+			if(err){
+				res.send({"ret":1});
+			}else{
+				logger.info("----------------------Success------------------------------");
+				res.send({"ret":0});
+			}
+		});
+	 /* Topic.getFullTopic(topic_id, function (err, err_msg, topic, author, replies) {
+	    if (err) {
+	      return res.send({ success: false, message: err.message });
+	    }
+	    if (!req.session.user.is_admin && !(topic.author_id.equals(req.session.user._id))) {
+	      res.status(403);
+	      return res.send({success: false, message: '无权限'});
+	    }
+	    if (!topic) {
+	      res.status(422);
+	      return res.send({ success: false, message: '此话题不存在或已被删除。' });
+	    }
+	    author.score -= 5;
+	    author.topic_count -= 1;
+	    author.save();
+
+	    topic.deleted = true;
+	    topic.save(function (err) {
+	      if (err) {
+	        return res.send({ success: false, message: err.message });
+	      }
+	      res.send({ success: true, message: '话题已被删除。' });
+	    });
+	  });*/
 };
 
 // 设为置顶

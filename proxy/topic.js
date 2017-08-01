@@ -70,6 +70,44 @@ exports.getCountByQuery = function (query, callback) {
  * @param {Object} opt 搜索选项
  * @param {Function} callback 回调函数
  */
+//Topic.getTopicsByQuery(query,{},proxy.done('topics'));
+
+exports.getTopicsByUserID = function (query, opt, callback) {
+  Topic.find(query, {}, opt, function (err, topics) {
+    if (err) {
+      return callback(err);
+    }
+    if (topics.length === 0) {
+      return callback(null, []);
+    }
+    return callback(null, topics);
+  });
+};
+
+exports.getTransmitTopicByTopicID = function (query, opt, callback) {
+	  Topic.find(query, {}, opt, function (err, topic) {
+	    if (err) {
+	      return callback(err);
+	    }
+	    if (topic.length === 0) {
+	      return callback(null, []);
+	    }
+	    return callback(null, topic);
+	  });
+	};
+
+exports.getTopicsByPresentTab = function (query, callback) {
+	  Topic.find(query, {},function (err, topics) {
+	    if (err) {
+	      return callback(err);
+	    }
+	    if (topics.length === 0) {
+	      return callback(null, []);
+	    }
+	    return callback(null, topics);
+	  });
+	};
+
 exports.getTopicsByQuery = function (query, opt, callback) {
   query.deleted = false;
   Topic.find(query, {}, opt, function (err, topics) {
@@ -154,6 +192,10 @@ exports.getFullTopic = function (id, callback) {
     Reply.getRepliesByTopicId(topic._id, proxy.done('replies'));
   }));
 };
+//
+exports.remove=function(id, callback){
+	Topic.remove({_id:id},callback);
+};
 
 /**
  * 更新主题的最后回复信息
@@ -171,6 +213,16 @@ exports.updateLastReply = function (topicId, replyId, callback) {
     topic.reply_count += 1;
     topic.save(callback);
   });
+};
+
+
+/**
+ * 将朋友圈设置成已发布
+ */
+exports.updateTopicToPresent = function (topicId, callback) {
+
+  var query = {_id: topicId};
+  Topic.update(query, { $set: { has_present: true } }).exec(callback);
 };
 
 /**
@@ -223,4 +275,13 @@ exports.newAndSave = function (title, content, tab, authorId, callback) {
   topic.author_id = authorId;
 
   topic.save(callback);
+};
+
+exports.createAndSave = function (content, tab, authorId, callback) {
+	  var topic       = new Topic();
+	  topic.content   = content;
+	  topic.tab       = tab;
+	  topic.author_id = authorId;
+
+	  topic.save(callback);
 };
